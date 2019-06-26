@@ -1,0 +1,27 @@
+#
+#   for an existing repository to make changes
+#
+vi README.md
+git add README.md
+git commit -m"changed README.md file"
+git push origin master
+#
+#  to delete a file
+#
+git rm BASICSVN.txt
+#
+#  to make a new repo of GMTSAR
+#
+#  create a new repository on https://github.com/dsandwell
+#
+cd /usr/local/gmtsar
+make spotless
+echo "# GMTSAR" >> README.md
+git init
+git add README.md
+git commit -m "first commit" 
+git remote add origin https://github.com/dsandwell/gmtsar.git
+git push -u origin master
+git add *
+git commit -m "adding all the code"
+git push -u origin master
