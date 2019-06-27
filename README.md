@@ -5,6 +5,7 @@ INSTRUCTIONS FOR INSTALLING AND RUNNING GMTSAR
 
 Copyright (c) 2009-2017
 David T. Sandwell  -  dsandwell@ucsd.edu
+Xiaohua Xu         -  xix016@ucsd.edu
 Rob Mellors        -  rmellors@geology.sdsu.edu
 Xiaopeng Tong      -  xitong@ucsd.edu
 Meng Wei           -  mwei@ucsd.edu
