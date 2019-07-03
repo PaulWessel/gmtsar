@@ -1,4 +1,8 @@
 #
+#  update your repository from the master before making any changes
+#
+git pull https://github.com/dsandwell/gmtsar
+#
 #   make changes to an existing repository 
 #
 cd /usr/local/gmtsar
