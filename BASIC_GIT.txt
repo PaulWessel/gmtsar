@@ -39,3 +39,12 @@ git push -u origin master
 git add *
 git commit -m "adding all the code"
 git push -u origin master
+#
+# clone a specific branch
+#
+git clone --branch 5.7 https://github.com/dsandwell/gmtsar GMTSAR
+#
+# switch to a specific branch
+#
+git branch 5.7
+
