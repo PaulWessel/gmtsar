@@ -1,6 +1,6 @@
 # GMTSAR
 *****************************************************************************************************
-#
+##
 INSTRUCTIONS FOR INSTALLING AND RUNNING GMTSAR 
 
 Copyright (c) 2009-2017
