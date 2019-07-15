@@ -95,13 +95,12 @@ set remarked = `echo by $USER on $today with $maker`
 echo remarked is $remarked
 
  proj_ra2ll.csh trans.dat corr.grd        corr_ll.grd           ; gmt grdedit -D//"dimensionless"/1///"$PWD:t geocoded correlation"/"$remarked"      corr_ll.grd
-#proj_ra2ll.csh trans.dat phase.grd       phase_ll.grd          ; gmt grdedit -D//"radians"/1///"$PWD:t wrapped phase"/"$remarked"                   phase_ll.grd
  proj_ra2ll.csh trans.dat phasefilt.grd   phasefilt_ll.grd      ; gmt grdedit -D//"radians"/1///"$PWD:t wrapped phase after filtering"/"$remarked"   phasefilt_ll.grd
-proj_ra2ll.csh trans.dat phase_mask.grd  phase_mask_ll.grd     ; gmt grdedit -D//"radians"/1///"$PWD:t wrapped phase after masking"/"$remarked"     phase_mask_ll.grd
+ proj_ra2ll.csh trans.dat phase_mask.grd  phase_mask_ll.grd     ; gmt grdedit -D//"radians"/1///"$PWD:t wrapped phase after masking"/"$remarked"     phase_mask_ll.grd
  proj_ra2ll.csh trans.dat display_amp.grd display_amp_ll.grd    ; gmt grdedit -D//"dimensionless"/1///"PWD:t amplitude"/"$remarked"                  display_amp_ll.grd
 if (-e xphase_mask.grd) then
-  proj_ra2ll.csh trans.dat xphase_mask.grd xphase_mask_ll.grd  ; gmt grdedit -D//"radians"/1///PWD:t xphase"/"$remarked"                            xphase_mask_ll.grd
-  proj_ra2ll.csh trans.dat yphase_mask.grd yphase_mask_ll.grd  ; gmt grdedit -D//"radians"/1///PWD:t yphase"/"$remarked"                            yphase_mask_ll.grd
+  proj_ra2ll.csh trans.dat xphase_mask.grd xphase_mask_ll.grd  ; gmt grdedit -D//"radians"/1///"$PWD:t xphase"/"$remarked" xphase_mask_ll.grd
+  proj_ra2ll.csh trans.dat yphase_mask.grd yphase_mask_ll.grd  ; gmt grdedit -D//"radians"/1///"$PWD:t yphase"/"$remarked" yphase_mask_ll.grd
 endif
 if (-e unwrap_mask.grd) then
   proj_ra2ll.csh trans.dat unwrap_mask.grd unwrap_mask_ll.grd  ; gmt grdedit -D//"radians"/1///"PWD:t unwrapped, masked phase"/"$remarked"               unwrap_mask_ll.grd
@@ -112,8 +111,6 @@ endif
 if (-e phasefilt_mask.grd) then
   proj_ra2ll.csh trans.dat phasefilt_mask.grd phasefilt_mask_ll.grd ; gmt grdedit -D//"phase in radians"/1///"PWD:t wrapped phase masked filtered"/"$remarked"   phasefilt_mask_ll.grd
 endif
-
-
 #
 #   now image for google earth
 #
@@ -123,9 +120,6 @@ grd2kml.csh display_amp_ll display_amp.cpt
 grd2kml.csh corr_ll corr.cpt
 grd2kml.csh phase_mask_ll phase.cpt
 grd2kml.csh phasefilt_mask_ll phase.cpt
-#ln -s phasefilt_mask_ll.grd phase_mask_ll_bw.grd
-#grd2kml.csh phase_mask_ll_bw phase_bw.cpt
-#rm phase_mask_ll_bw.grd
 if (-e xphase_mask_ll.grd) then
   grd2kml.csh xphase_mask_ll phase_grad.cpt
   grd2kml.csh yphase_mask_ll phase_grad.cpt
