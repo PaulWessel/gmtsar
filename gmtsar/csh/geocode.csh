@@ -48,12 +48,14 @@ gmt psscale -Rphase_mask.grd -J -DJTC+w5i/0.2i+h -Cphase.cpt -Bxa1.57+l"Phase" -
 gmt psconvert -Tf -P -Z phase_mask.ps
 echo "Masked phase map: phase_mask.pdf"
 if (-e xphase_mask.grd) then
-  gmt grdimage xphase_mask.grd -JX8i -Cphase_grad.cpt -X.2i -Y.5i -P -K > xphase_mask.ps
-  gmt psscale -Rxphase_mask.grd -J -DJTC+w5i/0.2i+h -Cphase_grad.cpt -Bxa1.57+l"Phase" -By+lrad -O >> xphase_mask.ps
+  makecpt -Cgray -T-.3/.3/.1 -N -Z > xphase.cpt
+  gmt grdimage xphase_mask.grd -JX8i -Cxphase.cpt -X.2i -Y.5i -P -K > xphase_mask.ps
+  gmt psscale -Rxphase_mask.grd -J -DJTC+w5i/0.2i+h -Cxphase.cpt -Bxa0.1+l"Phase" -By+lrad -O >> xphase_mask.ps
   gmt psconvert -Tf -P -Z xphase_mask.ps
   echo "Masked x phase map: xphase_mask.pdf"
-  gmt grdimage yphase_mask.grd -JX8i -Cphase_grad.cpt -X.2i -Y.5i -P -K > yphase_mask.ps
-  gmt psscale -Ryphase_mask.grd -J -DJTC+w5i/0.2i+h -Cphase_grad.cpt -Bxa1.57+l"Phase" -By+lrad -O >> yphase_mask.ps
+  makecpt -Cgray -T-.6/.6/.1 -N -Z > yphase.cpt
+  gmt grdimage yphase_mask.grd -JX8i -Cyphase.cpt -X.2i -Y.5i -P -K > yphase_mask.ps
+  gmt psscale -Ryphase_mask.grd -J -DJTC+w5i/0.2i+h -Cyphase.cpt -Bxa0.1+l"Phase" -By+lrad -O >> yphase_mask.ps
   gmt psconvert -Tf -P -Z yphase_mask.ps
   echo "Masked y phase map: yphase_mask.pdf"
 endif
@@ -95,12 +97,13 @@ set remarked = `echo by $USER on $today with $maker`
 echo remarked is $remarked
 
  proj_ra2ll.csh trans.dat corr.grd        corr_ll.grd           ; gmt grdedit -D//"dimensionless"/1///"$PWD:t geocoded correlation"/"$remarked"      corr_ll.grd
+#proj_ra2ll.csh trans.dat phase.grd       phase_ll.grd          ; gmt grdedit -D//"radians"/1///"$PWD:t wrapped phase"/"$remarked"                   phase_ll.grd
  proj_ra2ll.csh trans.dat phasefilt.grd   phasefilt_ll.grd      ; gmt grdedit -D//"radians"/1///"$PWD:t wrapped phase after filtering"/"$remarked"   phasefilt_ll.grd
- proj_ra2ll.csh trans.dat phase_mask.grd  phase_mask_ll.grd     ; gmt grdedit -D//"radians"/1///"$PWD:t wrapped phase after masking"/"$remarked"     phase_mask_ll.grd
+proj_ra2ll.csh trans.dat phase_mask.grd  phase_mask_ll.grd     ; gmt grdedit -D//"radians"/1///"$PWD:t wrapped phase after masking"/"$remarked"     phase_mask_ll.grd
  proj_ra2ll.csh trans.dat display_amp.grd display_amp_ll.grd    ; gmt grdedit -D//"dimensionless"/1///"PWD:t amplitude"/"$remarked"                  display_amp_ll.grd
 if (-e xphase_mask.grd) then
-  proj_ra2ll.csh trans.dat xphase_mask.grd xphase_mask_ll.grd  ; gmt grdedit -D//"radians"/1///"$PWD:t xphase"/"$remarked" xphase_mask_ll.grd
-  proj_ra2ll.csh trans.dat yphase_mask.grd yphase_mask_ll.grd  ; gmt grdedit -D//"radians"/1///"$PWD:t yphase"/"$remarked" yphase_mask_ll.grd
+  proj_ra2ll.csh trans.dat xphase_mask.grd xphase_mask_ll.grd  ; gmt grdedit -D//"radians"/1///"$PWD:t xphase"/"$remarked"                            xphase_mask_ll.grd
+  proj_ra2ll.csh trans.dat yphase_mask.grd yphase_mask_ll.grd  ; gmt grdedit -D//"radians"/1///"$PWD:t yphase"/"$remarked"                            yphase_mask_ll.grd
 endif
 if (-e unwrap_mask.grd) then
   proj_ra2ll.csh trans.dat unwrap_mask.grd unwrap_mask_ll.grd  ; gmt grdedit -D//"radians"/1///"PWD:t unwrapped, masked phase"/"$remarked"               unwrap_mask_ll.grd
@@ -121,8 +124,8 @@ grd2kml.csh corr_ll corr.cpt
 grd2kml.csh phase_mask_ll phase.cpt
 grd2kml.csh phasefilt_mask_ll phase.cpt
 if (-e xphase_mask_ll.grd) then
-  grd2kml.csh xphase_mask_ll phase_grad.cpt
-  grd2kml.csh yphase_mask_ll phase_grad.cpt
+  grd2kml.csh xphase_mask_ll xphase.cpt
+  grd2kml.csh yphase_mask_ll yphase.cpt
 endif
 if (-e unwrap_mask_ll.grd) then
   grd2kml.csh unwrap_mask_ll unwrap.cpt
@@ -134,8 +137,6 @@ if (-e unwrap_mask_ll.grd) then
   # constant is negative to make LOS = -1 * range change
   # constant is (1000 mm) / (4 * pi)
    gmt grdmath unwrap_mask_ll.grd $wavel MUL -79.58 MUL = los_ll.grd 
-
    gmt grdedit -D//"mm"/1///"$PWD:t LOS displacement"/"equals negative range" los_ll.grd 
-
   grd2kml.csh los_ll los.cpt
 endif
