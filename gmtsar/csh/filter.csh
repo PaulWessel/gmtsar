@@ -120,8 +120,8 @@ errormessage:
 # also compute gradients and filter them the same way
 #
 # echo "filtering interferogram..."
-# conv $az_lks $dec_rng $filter1 real.grd=bf real_tmp.grd=bf
-# conv $idec $jdec $filter2 real_tmp.grd=bf realfilt.grd
+ conv $az_lks $dec_rng $filter1 real.grd=bf real_tmp.grd=bf
+ conv $idec $jdec $filter2 real_tmp.grd=bf realfilt.grd
 # conv 1 1 $filter4 real_tmp.grd xt.grd=bf
 # conv 1 1 $filter5 real_tmp.grd yt.grd=bf
 # conv $idec $jdec $filter2 xt.grd=bf xreal.grd
@@ -129,8 +129,8 @@ errormessage:
 # rm real_tmp.grd 
 # rm real.grd
 # rm xt.grd yt.grd
-# conv $az_lks $dec_rng $filter1 imag.grd=bf imag_tmp.grd=bf
-# conv $idec $jdec $filter2 imag_tmp.grd=bf imagfilt.grd
+ conv $az_lks $dec_rng $filter1 imag.grd=bf imag_tmp.grd=bf
+ conv $idec $jdec $filter2 imag_tmp.grd=bf imagfilt.grd
 # conv 1 1 $filter4 imag_tmp.grd xt.grd=bf
 # conv 1 1 $filter5 imag_tmp.grd yt.grd=bf
 # conv $idec $jdec $filter2 xt.grd=bf ximag.grd
