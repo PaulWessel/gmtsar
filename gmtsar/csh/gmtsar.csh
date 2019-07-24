@@ -28,7 +28,7 @@ echo 'p2p_ENVI.csh              - process an interferogram from end-to-end for E
 echo 'p2p_ERS.csh               - process an interferogram from end-to-end for ERS'
 echo 'p2p_ERS.csh               - process an interferogram from end-to-end for ERS'
 echo 'p2p_RS2_SLC.csh               - process an interferogram from end-to-end for RS2_SLC'
-echo 'p2p_S1A_SLC.csh               - process an interferogram from end-to-end for S1A_SLC'
+echo 'p2p_S1_SLC.csh               - process an interferogram from end-to-end for S1A_SLC'
 echo 'p2p_TSX_SLC.csh               - process an interferogram from end-to-end for TSX_SLC'
 echo 'proj_ll2ra.csh		- project a grd file from lon/lat to range/azimuth'
 echo 'proj_ll2ra_ascii.csh	- project points from lon/lat to range/azimuth'
