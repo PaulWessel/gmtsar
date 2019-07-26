@@ -43,18 +43,15 @@ gmt grd2xyz $2 -s -bo3f -fg > llp
 #
 #   make grids of longitude and latitude versus range and azimuth
 #
-gmt gmtconvert $1 -o3,4,0 -bi5d -bo3f > llr
-gmt gmtconvert $1 -o3,4,1 -bi5d -bo3f > lla
+gmt gmtconvert $1 -o3,4,0,1 -bi5d -bo4f > llra
 #
-gmt surface llr `gmt gmtinfo llp -I0.08333333333 -bi3f` -bi3f -I.00083333333333 -T.50 -Gllr.grd $V
-gmt surface lla `gmt gmtinfo llp -I0.08333333333 -bi3f` -bi3f -I.00083333333333 -T.50 -Glla.grd $V
+set Rra = `gmt gmtinfo llp -I5m -bi3f`
+gmt surface llra $Rra -bi3f -I3s -T.50 -Gllr.grd $V -i0-2
+gmt surface llra $Rra -bi3f -I3s -T.50 -Glla.grd $V -i0,1,3
 #
-gmt grdtrack llp -nl -Gllr.grd -bi3f -bo4f > llpr 
-gmt grdtrack llpr -nl -Glla.grd -bi4f -bo5f > llpra 
-#
-# get the range, azimuth, phase columns and grid
-#
-gmt gmtconvert llpra -bi5f -bo3f -o3,4,2 > rap
+# Sample the grids, the get the range, azimuth, phase columns and grid
+
+gmt grdtrack llp -nl -Gllr.grd -Glla.grd -bi3f -bo5f -o3,4,2 > rap
 #
 #
 gmt xyz2grd rap `gmt gmtinfo rap -I32/64 -bi3f` -I32/64 -r -G$3 -bi3f
